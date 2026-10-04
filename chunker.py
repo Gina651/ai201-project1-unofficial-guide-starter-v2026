@@ -1,27 +1,12 @@
 """
 Stage 2 of the pipeline: splitting documents into chunks.
 
-⚠️ THIS IS THE FILE YOU CHANGE IN MILESTONE 3.
-
-`split_documents` below is deliberately plain. It cuts every document into
-fixed-size pieces with a fixed overlap and pays no attention to where sentences
-or paragraphs end. It works, and it is not good.
-
-On a corpus of short posts it may not cut anything at all: `campus_life` comes
-out as 88 documents and 88 chunks, because almost nothing in it reaches 800
-characters. That is the baseline, not a bug — Milestone 3 is where you decide
-whether one post should stay one chunk.
-
-Your job in Milestone 3 is to replace the *body* of `split_documents` with a
-strategy that fits the documents you actually read in Milestone 1. Keep the
-name and the shape of what it returns — the rest of the pipeline calls it, and
-your README has to name the function that produced your chunks.
-
-If you get stuck for 30 minutes, `fallback_split` is the original. Switch back
-to it, write down what you saw, and move on. That's a real observation about
-your pipeline, not giving up.
+`split_documents` is my chunker for the advice_threads corpus: one chunk per
+reply, with the thread title prepended. `fallback_split` is the starter's
+original fixed-window chunker, kept for comparison.
 """
 
+import re
 from dataclasses import dataclass
 
 import config
@@ -80,24 +65,48 @@ def fallback_split(
     return chunks
 
 
+# One reply starts at a line like: --- reply 2 (27 votes) ---
+REPLY_MARKER = re.compile(r"^--- reply \d+ \(\d+ votes?\) ---\s*$", re.MULTILINE)
+MIN_CHARS = 30  # anything shorter than this is a fragment, not a thought
+
+
 def split_documents(documents: list[Document]) -> list[Chunk]:
     """
-    Split documents into chunks. ⚠️ REPLACE THE BODY OF THIS IN MILESTONE 3.
+    One chunk per reply, with the THREAD title prepended to each.
 
-    Right now it just calls the fallback. That is the plain, generic behaviour
-    the brief is talking about.
-
-    When you write your own strategy, set `produced_by` to
-    "chunker.py::split_documents" so your README's Sample Chunks section names
-    the right function. `app.py chunks` prints that string for you.
-
-    Things worth thinking about before you write any code:
-      - Are your documents short posts or long guides?
-      - Is the useful information in one sentence, or spread over a paragraph?
-      - Would splitting on paragraph breaks keep more thoughts intact than
-        splitting on a character count?
+    Replies in these threads are short, self-contained, and often disagree
+    with each other, so a reply is the natural unit. The title goes on every
+    chunk because a reply like "Counterpoint, I sold mine" means nothing
+    without the question it answers.
     """
-    return fallback_split(documents)
+    chunks: list[Chunk] = []
+    for doc in documents:
+        parts = REPLY_MARKER.split(doc.text.strip())
+        title = parts[0].strip()      # the "THREAD: ..." line
+        replies = parts[1:]
+
+        # No reply markers found: keep the whole document as one chunk
+        # rather than silently losing it.
+        if not replies:
+            replies = [title]
+            title = ""
+
+        index = 0
+        for reply in replies:
+            body = reply.strip()
+            if len(body) < MIN_CHARS:
+                continue
+            text = f"{title}\n{body}" if title else body
+            chunks.append(
+                Chunk(
+                    text=text,
+                    source=doc.source,
+                    index=index,
+                    produced_by="chunker.py::split_documents",
+                )
+            )
+            index += 1
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:

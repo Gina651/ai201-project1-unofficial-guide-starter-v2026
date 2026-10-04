@@ -1,6 +1,7 @@
 # The Unofficial Guide
 
 <!-- Replace this line with your name and which corpus you picked. -->
+Gina Ngu-Atem — Corpus: `advice_threads`
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -29,18 +30,16 @@
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+## Chunking Strategy
 
-<!-- What about YOUR documents made you pick these numbers? Short posts and
-     long sectioned guides don't want the same chunking, and "800 seemed
-     reasonable" earns nothing. Point at something you noticed when you read
-     the documents in Milestone 1.
+**Chunk size:** One complete reply per chunk, with the thread question included (+ about ___ characters on average, shortest ___, longest ___ per the index summary)
+**Overlap:** None
 
-     If you changed your mind partway through, say so and say why. That's worth
-     more than pretending you got it right first time.
+I chose one reply per chunk because the advice_threads corpus contains short discussion threads where each reply usually represents a complete thought. I included the thread question in every chunk so each reply keeps the context needed to understand it. This also avoids the 2-character fragment produced by the starter's fixed-size chunker.
 
-     Milestone 3. -->
+When I read four threads in Milestone 1, each reply was one to three sentences and replies often disagreed with each other. The starter produced 26 chunks from 23 documents, so almost every thread became one chunk, and the bike_commute chunk mixed four replies including a counterpoint. Splitting on the reply markers gives 75 chunks.
+Overlap is none because replies never cut a sentence in half, and the thread title on each chunk carries the shared context. I drop the vote counts from the chunk text and skip anything under 30 characters so fragments can't become chunks.
+One thing I noticed afterward: chunk 5 (thread_sleep_schedule.txt#1) is an opinion rather than an answer, and splitting per reply puts disagreeing replies in separate chunks, so a question might retrieve only one side.
 
 ## Sample Chunks
 
@@ -53,29 +52,40 @@
 
      Milestone 3. -->
 
-**Chunk 1** — source: `` — produced by: ``
+
+**Chunk 1** — source: `thread_bike_commute.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Is a bike worth it for a 20 minute walk commute?
+Yeah. Cuts an 18 minute walk to about 6. The thing nobody mentions is storage — covered bike parking exists at three buildings and is full by 9am at all three.
 ```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 2** — source: `thread_first_gen.txt#1` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Anything specific for first-generation students?
+The thing I'd say: the unwritten rules are the hard part, not the coursework. Ask about the unwritten rules explicitly. People are happy to explain them and nobody volunteers them.
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 3** — source: `thread_laptop_specs.txt#2` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: How much laptop do I actually need for CS courses?
+I did two years on an 8GB machine and it was fine until the last project, at which point it very much wasn't. 16 is the answer.
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 4** — source: `thread_parking.txt#1` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Worth getting a parking permit?
+Street parking on Verrill is legal and free and unmarked, which is why half the upper years do it.
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 5** — source: `thread_sleep_schedule.txt#1` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Everyone says fix your sleep. Does it actually matter?
+The library being open until 2am is a trap. It's a resource, not a schedule.
 ```
 
 ## Sample Answer
