@@ -25,7 +25,7 @@ contains the answer.
 **Why this target:**
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
-
+I chose 4 out of 5 because if the system retrieves the correct information for most of my test questions, I can trust that the retrieved data is useful. I do not expect the system to be perfect every time.
 ---
 
 ## 2. Every answer names a source
@@ -35,7 +35,7 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
-
+I chose 5 out of 5 because every answer should name its source. This allows me to trace where the information came from instead of receiving a vague response without a reference.
 ---
 
 ## 3. The relevance gate stops out-of-corpus questions
@@ -52,7 +52,7 @@ in at least 4 of 5 tries.
 **Why this target:**
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
-
+I chose 4 out of 5 because the system should recognize when a question is outside the corpus instead of generating unsupported information. This helps prevent false, unsafe, or unreliable answers.
 ---
 
 ## 4. Something about your chunks
@@ -72,7 +72,10 @@ in at least 4 of 5 tries.
 
 
 **Why this target:**
+For at least 4 of my 5 test questions, most of the retrieved chunk should be relevant to the question and contain the context needed to answer it without a lot of unrelated information.
 
+**Why this target:**
+My corpus contains short discussion threads with multiple replies, and different replies can contain useful information. I want the chunks to provide enough context to answer the question without including too much unrelated information.
 
 
 ---
@@ -91,7 +94,7 @@ in at least 4 of 5 tries.
 
 **Why this target:**
 
-
+For at least 4 of my 5 test questions, the source named in the answer should contain information that supports the answer.**Why this target:**I care about the source being correct because I want to be able to cite or reference it confidently. If the source does not support the answer, the citation would not be useful or reliable.
 
 ---
 
