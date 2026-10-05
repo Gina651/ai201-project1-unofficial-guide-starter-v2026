@@ -22,13 +22,7 @@ Gina Ngu-Atem — Corpus: `advice_threads`
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
-
-     Milestone 5. -->
-
-## Chunking Strategy
+I chose the advice_threads corpus, which contains student questions and responses about topics such as internships, commuting, classes, and campus life. My retrieval-augmented generation system searches these threads for information relevant to a user’s question and uses the retrieved content to generate an answer. Each response includes the source document so users can reference the information. If the retrieved content is not sufficiently relevant, the system refuses to answer rather than generating unsupported information.
 
 ## Chunking Strategy
 
@@ -142,9 +136,12 @@ I kept the cutoff at 0.6 because my five in-corpus questions had best distances 
 
      Milestone 5. -->
 
-**1.**
+
+**1.** 
+For the first example, you can explain how you described the importance of creating focused chunks that retrieve the necessary context without including too much distracting information. We discussed the structure of the advice_threads corpus, which led to the idea of splitting the data around individual replies while keeping the original thread question for context. You then implemented and tested this approach and reviewed the five resulting chunks.
 
 **2.**
+For the second example, use Milestone 4. You provided the retrieval distances, and we compared the five in-corpus values, which ranged from 0.1309 to 0.3753, with the five out-of-scope values, which ranged from 0.8189 to 0.9047. We found that the existing 0.6 cutoff already fell clearly between the two groups, so there was no reason to change it simply for the sake of making an adjustment.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
