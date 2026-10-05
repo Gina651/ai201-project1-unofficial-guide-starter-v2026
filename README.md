@@ -93,14 +93,21 @@ The library being open until 2am is a trap. It's a resource, not a schedule.
 <!-- One complete question and answer, pasted as text, with the source line
      visible. Milestone 4. -->
 
-**Question:**
+**Question:** When should I start looking for a summer internship?
 
 **Answer:**
 
 ```
+You should start looking for a summer internship earlier than feels reasonable, as large employers close applications in October and November. Additionally, smaller and local places hire in February and March if you miss the autumn window.
+
+(Source: thread_internship_timing.txt)
+
+Sources retrieved: thread_first_gen.txt, thread_first_year_regret.txt, thread_internship_timing.txt
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff:** 0.6
+
+I kept the cutoff at 0.6 because my five in-corpus questions had best distances from 0.1309 to 0.3753, while the five out-of-scope questions had best distances from 0.8189 to 0.9047. There was a clear gap between 0.3753 and 0.8189, and 0.6 falls inside that gap. At this cutoff, all five in-corpus questions pass the gate and all five out-of-scope questions are refused.
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -112,8 +119,17 @@ The library being open until 2am is a trap. It's a resource, not a schedule.
      Milestone 4. -->
 
 | Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+|---|---|---:|
+| When should I start looking for a summer internship? | Yes | 0.1309 |
+| How do you handle a group project where someone disappears? | Yes | 0.1634 |
+| Is a bike worth it for a short commute? | Yes | 0.2287 |
+| What's different between the add/drop deadline and the withdrawal deadline? | Yes | 0.2643 |
+| Can I take a course pass/fail after the term starts? | Yes | 0.3753 |
+| What is the capital of Mongolia? | No | 0.8990 |
+| How do I change the oil in a diesel engine? | No | 0.9047 |
+| Who won the 1994 World Cup? | No | 0.8982 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.8189 |
+| How do I write a for loop in Rust? | No | 0.8606 |
 
 ## How I Used AI
 
